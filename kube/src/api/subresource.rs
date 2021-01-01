@@ -258,36 +258,6 @@ impl Default for AttachParams {
 
 #[cfg(feature = "ws")]
 impl AttachParams {
-    /// Specify the container to execute in.
-    pub fn container<T: Into<String>>(&mut self, container: T) -> &mut Self {
-        self.container = Some(container.into());
-        self
-    }
-
-    /// Set `stdin` field.
-    pub fn stdin(&mut self, enable: bool) -> &mut Self {
-        self.stdin = enable;
-        self
-    }
-
-    /// Set `stdout` field.
-    pub fn stdout(&mut self, enable: bool) -> &mut Self {
-        self.stdout = enable;
-        self
-    }
-
-    /// Set `stderr` field.
-    pub fn stderr(&mut self, enable: bool) -> &mut Self {
-        self.stderr = enable;
-        self
-    }
-
-    /// Set `tty` field.
-    pub fn tty(&mut self, enable: bool) -> &mut Self {
-        self.tty = enable;
-        self
-    }
-
     fn validate(&self) -> Result<()> {
         if !self.stdin && !self.stdout && !self.stderr {
             return Err(Error::RequestValidation(

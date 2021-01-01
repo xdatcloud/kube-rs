@@ -60,7 +60,10 @@ async fn main() -> anyhow::Result<()> {
             .exec(
                 "example",
                 vec!["sh", "-c", "for i in $(seq 1 3); do date; done"],
-                &AttachParams::default().stderr(false),
+                &AttachParams {
+                    stderr: false,
+                    ..AttachParams::default()
+                },
             )
             .await?;
         let output = get_output(attached).await;
@@ -70,7 +73,14 @@ async fn main() -> anyhow::Result<()> {
 
     {
         let attached = pods
-            .exec("example", vec!["uptime"], &AttachParams::default().stderr(false))
+            .exec(
+                "example",
+                vec!["uptime"],
+                &AttachParams {
+                    stderr: false,
+                    ..AttachParams::default()
+                },
+            )
             .await?;
         let output = get_output(attached).await;
         println!("{}", output);
@@ -83,7 +93,11 @@ async fn main() -> anyhow::Result<()> {
             .exec(
                 "example",
                 vec!["sh"],
-                &AttachParams::default().stdin(true).stderr(false),
+                &AttachParams {
+                    stdin: true,
+                    stderr: false,
+                    ..AttachParams::default()
+                },
             )
             .await?;
         let mut stdin_writer = attached.stdin().unwrap();
