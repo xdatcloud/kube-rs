@@ -4,6 +4,7 @@
 //! The [`Config`] has several constructors plus logic to infer environment.
 //!
 //! Unless you have issues, prefer using [`Config::infer`], and pass it to a [`Client`][crate::Client].
+use secrecy::SecretString;
 use std::{path::PathBuf, time::Duration};
 
 use thiserror::Error;
@@ -202,6 +203,7 @@ impl Config {
 
         let default_namespace = incluster_config::load_default_ns()?;
         let root_cert = incluster_config::load_cert()?;
+        let token = incluster_config::load_token()?;
 
         Ok(Self {
             cluster_url,
@@ -210,7 +212,7 @@ impl Config {
             timeout: Some(DEFAULT_TIMEOUT),
             accept_invalid_certs: false,
             auth_info: AuthInfo {
-                token_file: Some(incluster_config::token_file()),
+                token: Some(SecretString::from(token)),
                 ..Default::default()
             },
             proxy_url: None,
