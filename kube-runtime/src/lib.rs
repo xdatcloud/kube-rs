@@ -21,6 +21,7 @@ pub mod controller;
 k8s_openapi::k8s_if_ge_1_19! {
     pub mod events;
 }
+pub mod extensions;
 pub mod finalizer;
 pub mod reflector;
 pub mod scheduler;

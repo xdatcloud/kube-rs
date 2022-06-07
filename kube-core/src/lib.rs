@@ -57,4 +57,6 @@ mod error;
 pub use error::ErrorResponse;
 
 mod version;
+pub mod extensions;
+
 pub use version::Version;
